@@ -7,26 +7,44 @@ on:
       - "v*"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build-and-release:
+  build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/xu-cheng/texlive-full:latest
     env:
       TEX_FILE: cv.tex
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
-
-      - name: Set up LaTeX toolchain
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y latexmk texlive-full
+        with:
+          persist-credentials: false
 
       - name: Build document
         run: |
           latexmk -pdf -interaction=nonstopmode -halt-on-error "$TEX_FILE"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: "*.pdf"
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download PDF artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cv-pdf
+          path: dist
 
       - name: Create release tag for manual runs
         if: github.event_name == 'workflow_dispatch'
@@ -44,4 +62,4 @@ jobs:
           tag_name: ${{ env.RELEASE_TAG }}
           name: LaTeX Build ${{ env.RELEASE_TAG }}
           files: |
-            *.pdf
+            dist/*.pdf
