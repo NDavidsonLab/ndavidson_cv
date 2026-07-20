@@ -1,0 +1,106 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% macros.tex
+%% Reusable commands for Natalie Davidson CV
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---------------------------------------------------------------
+%% Contact information
+%% ---------------------------------------------------------------
+
+\newcommand{\Email}[1]{\href{mailto:#1}{#1}}
+\newcommand{\ORCID}[1]{\href{https://orcid.org/#1}{ORCID}}
+\newcommand{\Scholar}[1]{\href{#1}{Google Scholar}}
+\newcommand{\Github}[1]{\href{#1}{GitHub}}
+\newcommand{\Website}[1]{\href{#1}{Lab Website}}
+
+%% ---------------------------------------------------------------
+%% Name formatting
+%% ---------------------------------------------------------------
+
+\newcommand{\myname}{\textbf{Davidson, Natalie R.}}
+
+%% ---------------------------------------------------------------
+%% Section spacing
+%% ---------------------------------------------------------------
+
+\newcommand{\cvsection}[1]{%
+    \vspace{1.2em}
+    \section{#1}
+}
+
+%% ---------------------------------------------------------------
+%% CV Entries
+%% ---------------------------------------------------------------
+
+\newcommand{\cventry}[4]{%
+\noindent
+\textbf{#1}\hfill\textbf{#2}\\
+#3\\
+{\small #4}
+\vspace{0.8em}
+}
+
+%% ---------------------------------------------------------------
+%% Grant Entry
+%% ---------------------------------------------------------------
+
+\newcommand{\grant}[5]{%
+\noindent\textbf{#1}\\
+\textit{#2}\hfill #3\\
+\if\relax\detokenize{#4}\relax
+\else
+Award Amount: #4\\
+\fi
+#5
+\vspace{1.2em}
+}
+
+%% ---------------------------------------------------------------
+%% Software Entry
+%% ---------------------------------------------------------------
+
+\newcommand{\software}[3]{%
+\noindent
+\textbf{#1}\\
+#2\\
+{\small #3}
+\vspace{0.8em}
+}
+
+%% ---------------------------------------------------------------
+%% Mentoring Entry
+%% ---------------------------------------------------------------
+
+\newcommand{\mentee}[4]{%
+\textbf{#1}\\
+#2\\
+#3\\
+{\small #4}
+\vspace{0.8em}
+}
+
+%% ---------------------------------------------------------------
+%% Invited Talk
+%% ---------------------------------------------------------------
+
+\newcommand{\talk}[4]{%
+\textbf{#1}\hfill #2\\
+#3\\
+{\small #4}
+\vspace{0.8em}
+}
+
+%% ---------------------------------------------------------------
+%% Publication notes
+%% ---------------------------------------------------------------
+
+\newcommand{\cofirst}{$^{\dagger}$}
+\newcommand{\corresponding}{$^{*}$}
+
+\newcommand{\publicationnotes}{
+\noindent
+{\footnotesize
+\cofirst~Co-first author \hspace{2em}
+\corresponding~Corresponding author
+}
+}

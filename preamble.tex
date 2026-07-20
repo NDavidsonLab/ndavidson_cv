@@ -1,0 +1,139 @@
+% -----------------------------------------------------------------------------
+% CV preamble: shared packages, spacing, hyperlinks, bibliography, and styles.
+% Compile with LuaLaTeX or pdfLaTeX + Biber.
+% -----------------------------------------------------------------------------
+
+% Page layout
+\usepackage[margin=0.78in]{geometry}
+
+% Encoding / fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% Core formatting
+\usepackage{xcolor}
+\definecolor{MidnightBlue}{RGB}{0,51,102}
+\definecolor{RuleGray}{RGB}{95,95,95}
+
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+
+% Hyperlinks
+\hypersetup{
+  colorlinks=true,
+  urlcolor=MidnightBlue,
+  linkcolor=MidnightBlue,
+  citecolor=MidnightBlue,
+  pdftitle={Natalie R. Davidson CV},
+  pdfauthor={Natalie R. Davidson}
+}
+\urlstyle{same}
+
+% Paragraph/list spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\linespread{1.0}
+\setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=1pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=1pt,topsep=1pt,parsep=0pt}
+\setlength{\emergencystretch}{2em}
+
+% Section styling (kept as a fallback; the document uses \cvsection)
+\titleformat{\section}{\large\bfseries\color{MidnightBlue}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{7pt}{2pt}
+\titleformat{\subsection}{\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{4pt}{1pt}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+% Tables
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\renewcommand{\arraystretch}{1.08}
+
+% Bibliography: Biber backend, newest first, compact numeric citations.
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=ydnt,
+  maxbibnames=99,
+  minbibnames=99,
+  giveninits=true,
+  doi=true,
+  url=true,
+  isbn=false,
+  eprint=false,
+  bibencoding=utf8
+]{biblatex}
+\addbibresource{publications.bib}
+
+\usepackage{xpatch}
+
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \ifstrequal{#1}{Davidson}
+    {\textbf{#1}}
+    {#1}}
+
+\renewcommand*{\mkbibnamegiven}[1]{%
+  \ifstrequal{#1}{Natalie}
+    {\textbf{#1}}
+    {#1}}
+
+    
+% Make bibliography compact and CV-friendly.
+\setlength{\bibitemsep}{0.55\baselineskip}
+\setlength{\bibhang}{1.5em}
+\renewcommand*{\bibfont}{\small}
+\renewcommand*{\bibnamedash}{\textemdash}
+
+% Automatic bolding of Natalie Davidson's name in the bibliography.
+% Works for common BibTeX variants exported by Google Scholar.
+\newcommand*{\cvmyfamily}{Davidson}
+\newcommand*{\cvmygivena}{Natalie R.}
+\newcommand*{\cvmygivenb}{Natalie R}
+\newcommand*{\cvmygivenc}{Natalie}
+\newcommand*{\cvmygivend}{N. R.}
+\newcommand*{\cvmygivene}{N. R}
+\newcommand*{\cvmygivenf}{N R}
+\newcommand*{\cvmygiveng}{N.R.}
+\newcommand*{\cvmygivenh}{N.R}
+
+\newcommand*{\cvboldifmine}[1]{%
+  \ifboolexpr{
+    test {\ifdefstring{\namepartfamily}{\cvmyfamily}} and (
+      test {\ifdefstring{\namepartgiven}{\cvmygivena}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivenb}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivenc}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivend}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivene}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivenf}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygiveng}} or
+      test {\ifdefstring{\namepartgiven}{\cvmygivenh}}
+    )
+  }{\mkbibbold{#1}}{#1}%
+}
+
+\renewcommand*{\mkbibnamefamily}[1]{\cvboldifmine{#1}}
+\renewcommand*{\mkbibnamegiven}[1]{\cvboldifmine{#1}}
+\renewcommand*{\mkbibnameprefix}[1]{#1}
+\renewcommand*{\mkbibnamesuffix}[1]{#1}
+
+% Optional helpers for sectioned bibliographies later.
+\defbibheading{pubs}{\cvsection{#1}}
+
