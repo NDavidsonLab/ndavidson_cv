@@ -1,0 +1,47 @@
+name: Build LaTeX CV
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    env:
+      TEX_FILE: cv.tex
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up LaTeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-full
+
+      - name: Build document
+        run: |
+          latexmk -pdf -interaction=nonstopmode -halt-on-error "$TEX_FILE"
+
+      - name: Create release tag for manual runs
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "RELEASE_TAG=manual-${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
+
+      - name: Set release tag for tag pushes
+        if: github.event_name != 'workflow_dispatch'
+        run: |
+          echo "RELEASE_TAG=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+
+      - name: Publish PDF to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: LaTeX Build ${{ env.RELEASE_TAG }}
+          files: |
+            *.pdf
