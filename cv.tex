@@ -1,13 +1,36 @@
 \documentclass[11pt]{article}
 \input{preamble}
 \input{macros}
+
+% -----------------------------------------------------------------------------
+% Section toggles: flip a line below to "false" to exclude a section from the
+% build without deleting or commenting out its \input line. Useful for making
+% shorter, purpose-specific versions of the CV (e.g. grant bio-sketches).
+% Core identity sections (frontmatter: appointments, education, honors) are
+% always included and are not toggled.
+% -----------------------------------------------------------------------------
+\newtoggle{showPublications}
+\newtoggle{showFunding}
+\newtoggle{showTalks}
+\newtoggle{showMentoring}
+\newtoggle{showTeachingService}
+\newtoggle{showProfessional}
+
+\toggletrue{showPublications}
+\toggletrue{showFunding}
+\toggletrue{showTalks}
+\toggletrue{showMentoring}
+\toggletrue{showTeachingService}
+\toggletrue{showProfessional}
+
 \begin{document}
+
 \input{sections/01_frontmatter}
-\input{sections/02_funding}
-\input{sections/04_talks}
-\input{sections/05_mentoring}
-\input{sections/06_teaching_service}
-\input{sections/07_professional}
-\input{sections/03_publications}
+\iftoggle{showPublications}{\input{sections/03_publications}}{}
+\iftoggle{showFunding}{\input{sections/02_funding}}{}
+\iftoggle{showTalks}{\input{sections/04_talks}}{}
+\iftoggle{showMentoring}{\input{sections/05_mentoring}}{}
+\iftoggle{showTeachingService}{\input{sections/06_teaching_service}}{}
+\iftoggle{showProfessional}{\input{sections/07_professional}}{}
 
 \end{document}

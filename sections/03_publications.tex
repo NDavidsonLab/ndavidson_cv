@@ -1,25 +1,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Publications
+%%
+%% \nocite{*} marks every entry in publications.bib as "cited" so it's
+%% eligible to be printed. \printbibliography[keyword=mypub] then filters
+%% that down to only entries tagged keywords={mypub} -- i.e. papers you
+%% are actually an author on (including as a named consortium member).
+%%
+%% To add a new publication: add the BibTeX entry with keywords={mypub}
+%% (or append ",mypub" to an existing keywords field). To cite a paper
+%% elsewhere (e.g. in Software) WITHOUT it appearing in this list, leave
+%% off the mypub tag.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%\nocite{icgc2020pan}
-%\nocite{pcawg2020genomic}
-%\nocite{davidson2024analysis}
-%\nocite{stark2021pmvae}
-%\nocite{hippen2023deconvolution}
-%\nocite{davidson2025buddi}
-%\nocite{davidson2024molecular}
-%\nocite{lawson2024characterization}
-%\nocite{ivich2025missing}
-%\nocite{lin2024leveraging}
-%\nocite{tanis2026transcriptomic}
-
-\cvsection{Selected Publications}
+\cvsection{Publications}
 
 \nocite{*}
 
 \printbibliography[
-    heading=none
+    heading=none,
+    keyword=mypub
 ]
-
