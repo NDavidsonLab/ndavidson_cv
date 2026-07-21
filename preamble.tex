@@ -82,6 +82,15 @@
   eprint=false,
   bibencoding=utf8
 ]{biblatex}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=keywords, notmatch=\regexp{mypub}, final]
+      \step[entrynull]
+    }
+  }
+}
 \addbibresource{publications.bib}
 
 \usepackage{xpatch}
