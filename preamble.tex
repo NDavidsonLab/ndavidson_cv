@@ -108,7 +108,15 @@
 \newcommand*{\cvboldfamily}[1]{%
   \IfStrEq{#1}{Davidson}{\textbf{#1}}{#1}%
 }
-\renewcommand*{\mkbibnamefamily}[1]{\cvboldfamily{#1}}
+\newcommand*{\cvmenteeformat}[1]{%
+  \IfStrEq{#1}{Tanis}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Dixon}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Lesiyon}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Lopez Alvarez}{#1$^{\dagger}$}{#1}}}}%
+}
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \IfStrEq{#1}{Davidson}{\textbf{#1}}{\cvmenteeformat{#1}}%
+}
 
 % Optional helpers for sectioned bibliographies later.
 \defbibheading{pubs}{\cvsection{#1}}
