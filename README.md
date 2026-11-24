@@ -12,7 +12,15 @@ This repository contains the LaTeX source for Natalie R. Davidson's academic CV.
 
 ## Build
 
-Requires `latexmk` + `pdflatex` + `biber` (for the bibliography).
+Requires `latexmk` + `pdflatex` + `csquotes` + `biber` (for the bibliography) among others; the full list is below.
+
+If you're using BasicTex on OS X, you can install them like so:
+```
+sudo /Library/TeX/texbin/tlmgr install \
+  latexmk biber biblatex csquotes \
+  enumitem titlesec setspace ragged2e booktabs \
+  multirow fancyhdr etoolbox xstring xpatch
+```
 
 ```
 make        # builds cv.pdf
