@@ -30,6 +30,7 @@
 \usepackage{multirow}
 \usepackage{fancyhdr}
 \usepackage{etoolbox}
+\usepackage{xstring}
 
 % Hyperlinks
 \hypersetup{
@@ -81,6 +82,15 @@
   eprint=false,
   bibencoding=utf8
 ]{biblatex}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=keywords, notmatch=\regexp{mypub}, final]
+      \step[entrynull]
+    }
+  }
+}
 \addbibresource{publications.bib}
 
 \usepackage{xpatch}
@@ -92,36 +102,21 @@
 \renewcommand*{\bibnamedash}{\textemdash}
 
 % Automatic bolding of Natalie Davidson's name in the bibliography.
-% Works for common BibTeX variants exported by Google Scholar.
-\newcommand*{\cvmyfamily}{Davidson}
-\newcommand*{\cvmygivena}{Natalie R.}
-\newcommand*{\cvmygivenb}{Natalie R}
-\newcommand*{\cvmygivenc}{Natalie}
-\newcommand*{\cvmygivend}{N. R.}
-\newcommand*{\cvmygivene}{N. R}
-\newcommand*{\cvmygivenf}{N R}
-\newcommand*{\cvmygiveng}{N.R.}
-\newcommand*{\cvmygivenh}{N.R}
-
-\newcommand*{\cvboldifmine}[1]{%
-  \ifboolexpr{
-    test {\ifdefstring{\namepartfamily}{\cvmyfamily}} and (
-      test {\ifdefstring{\namepartgiven}{\cvmygivena}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivenb}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivenc}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivend}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivene}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivenf}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygiveng}} or
-      test {\ifdefstring{\namepartgiven}{\cvmygivenh}}
-    )
-  }{\mkbibbold{#1}}{#1}%
+% \mkbibnamefamily receives the family-name text directly as its argument,
+% so we compare that text directly rather than relying on \namepartfamily
+% (which isn't reliably set at this hook -- that was the earlier bug).
+\newcommand*{\cvboldfamily}[1]{%
+  \IfStrEq{#1}{Davidson}{\textbf{#1}}{#1}%
 }
-
-\renewcommand*{\mkbibnamefamily}[1]{\cvboldifmine{#1}}
-\renewcommand*{\mkbibnamegiven}[1]{\cvboldifmine{#1}}
-\renewcommand*{\mkbibnameprefix}[1]{#1}
-\renewcommand*{\mkbibnamesuffix}[1]{#1}
+\newcommand*{\cvmenteeformat}[1]{%
+  \IfStrEq{#1}{Tanis}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Dixon}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Lesiyon}{#1$^{\dagger}$}{%
+  \IfStrEq{#1}{Lopez Alvarez}{#1$^{\dagger}$}{#1}}}}%
+}
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \IfStrEq{#1}{Davidson}{\textbf{#1}}{\cvmenteeformat{#1}}%
+}
 
 % Optional helpers for sectioned bibliographies later.
 \defbibheading{pubs}{\cvsection{#1}}
